@@ -11,8 +11,24 @@
 <body>
   <main>
     <h1>Vanilla JavaScript App</h1>
-    <p>Leading message from the API: <b id="name">...</b></p>
+    <p>Loading message from the API: <b id="name">...</b></p>
   </main>
 </body>
+
+<script>
+  
+  (async function () {
+    console.log("Getting message...");
+    let msg;
+    try {
+      msg = await fetch('/api/GetMessage');
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(await msg.text());
+    let {text} = await (await fetch('/api/GetMessage')).json();
+    document.querySelector('#name').textContent = text;
+  })(); 
+</script>
 
 </html>
